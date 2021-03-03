@@ -1,0 +1,70 @@
+preprocessor:
+    classes:
+        - Nottingham
+        - Pop
+    pickle_store_folder: 'pickles'
+    note_num: 17
+    longest: 100
+    low_crop: 55 
+    high_crop: 89
+    num_notes: 128
+    smallest_note: 16
+    max_velocity: 127
+    input_length: &T 32
+    test_fraction: 0.1
+
+separate:
+    songs_path: './songs/source_2'
+    save_path: 'songs/separate_2'
+    save_reconstructed: 'true'
+
+combine:
+    p_path: './songs/separate_2/333/ashover3/pitch/p_10'
+    r_path: './songs/separate_2/333/ashover6/rhythm/r_10'
+    chord_path: './songs/separate/111/ashover1/chord/chord_0'
+    save_path: 'songs/combine_2/long'
+    model_path: 'params/2048.pt'
+    
+model:
+    "batch_size": 128
+    "roll_dim": 36
+    "n_epochs": 50
+    "lr": 0.001
+    "decay": 0.9999
+    "if_parallel": false
+    "name": "vae_2bar"
+    "hidden_dim": 2048
+    "infor_dim": 51
+    "beta": 0.1
+    "time_step": 100
+
+data: # Specify paths to data
+    X_train_data: 'pickles/dims_34/X_train.pickle'
+    source_train_data: 'pickles/dims_34/source_train.pickle'
+    length_train_data: 'pickles/dims_34/length_train.pickle'
+    X_test_data: 'pickles/dims_34/X_test.pickle'
+    source_test_data: 'pickles/dims_34/source_test.pickle'
+    length_test_data: 'pickles/dims_34/length_test.pickle'
+    val_data: ''
+    train_instrument_data: ''
+    val_instrument_data: ''
+    train_tempo_data: ''
+    val_tempo_data: ''
+    train_song_paths: ''
+    val_song_paths: ''
+
+evaluation:
+    model_path: 'outputs/checkpoints/epoch_50/model.pt'
+    test_data: 'pickles_49/X_train.pickle'
+    test_instruments: 'pickles_49/I_train.pickle'
+    test_songs: 'pickles_49/train_paths.pickle'
+    test_tempos: 'pickles_49/T_train.pickle'
+    batch_size: ""
+    temperature: 1.0
+    reconstruction:
+        attach_method: '1hot-category'
+        song_name: 'ashover1'
+        reconstruction_path: 'midi_reconstruction'
+        
+    
+
